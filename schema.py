@@ -5,6 +5,7 @@ from sqlalchemy.orm import declarative_base
 from datetime import datetime
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
+import hashlib
 
 
 
@@ -19,69 +20,104 @@ engine = create_engine(url)
 
 connection = engine.connect()
 
-
-
-
 Base = declarative_base()
 
-class Article(Base):
-    __tablename__ = 'articles'
+
+
+class User(Base):
+    __tablename__ = 'users'
 
     id = Column(Integer(), primary_key=True)
-    slug = Column(String(100), nullable=False, unique=True)
-    title = Column(String(100), nullable=False)
+    username = Column(String(100), nullable=False, unique=True)
+    email = Column(String(100), nullable=False)
+    password = Column(String(100), nullable=False)
     created_on = Column(DateTime(), default=datetime.now)
     updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
     content = Column(Text)
-    author_id = Column(Integer(), ForeignKey('authors.id'))
+   
 
-
-
-class Author(Base):
-    __tablename__ = 'authors'
+class Service(Base):
+    __tablename__ = "services"
 
     id = Column(Integer(), primary_key=True)
-    firstname = Column(String(100))
-    lastname = Column(String(100))
-    email = Column(String(255), nullable=False)
-    joined = Column(DateTime(), default=datetime.now)
+    name = Column(String(100), nullable=False, unique=True)
 
-    articles = relationship('Article', backref='author')
+class Password(Base):
+    __tablename__ = 'passwords'
+
+    id = Column(Integer(), primary_key=True)
+    joined = Column(DateTime(), default=datetime.now)
+    user_id = Column(Integer(), ForeignKey('users.id'))
+    service_id = Column(Integer(), ForeignKey('services.id'))
+    password = Column(String(128), nullable=False) 
+
+    # user = relationship('User', backref='services')
+
+
+
+# Drop existing tables if any
+Base.metadata.drop_all(engine)
 
 Base.metadata.create_all(engine)
 
 
 
 
-ezz = Author(
-    firstname="Ezzeddin",
-    lastname="Abdullah",
-    email="ezz_email@gmail.com"
-)
 
-ahmed = Author(
-    firstname="Ahmed",
-    lastname="Mohammed",
+ahmed = User(
+    username="Ahmedd",
+    password="Mohammed",
     email="ahmed_email@gmail.com"
 )
 
-article1 = Article(
-    slug="clean-python",
-    title="How to Write Clean Python",
-    content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author=ezz
-    )
+
+ezekiel = User(
+    username="ezekiel",
+    password="Mohammed",
+    email="ahmed_email@gmail.com"
+)
+
+facebook = Service(
+    name="facebook"
+)
+
+
 
 Session = sessionmaker(bind=engine)
 session = Session()
-session.add(article1)
+session.add(ahmed)
+session.add(ezekiel)
+session.add(facebook)
+session.commit()
+
+
+ahmed_facebook = Password(
+    user_id=ahmed.id,
+    service_id=facebook.id,
+    password="bananas"
+)
+
+ezekiel_facebook = Password(
+    user_id=ezekiel.id,
+    service_id=facebook.id,
+    password="ezekiel12345"
+)
+
+
+session.add(ahmed_facebook)
+session.add(ezekiel_facebook)
 session.commit()
 
 
 
-print(article1.title)
+print(ahmed.id)
 
 
 
 
 
+
+
+# SELECT * 
+# FROM user_service us
+# JOIN users u ON u.id = us.user_id;
