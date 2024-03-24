@@ -1,17 +1,23 @@
 altgraph @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/altgraph-0.17.2-py2.py3-none-any.whl
 auto-py-to-exe==2.42.0
+blinker==1.7.0
 bottle==0.12.25
 bottle-websocket==0.2.9
+click==8.1.7
 colorama==0.4.6
 distlib==0.3.8
 Eel==0.16.0
 filelock==3.13.1
+Flask==3.0.2
 future @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/future-0.18.2-py3-none-any.whl
 gevent==23.9.1
 gevent-websocket==0.10.1
 greenlet==3.0.3
 importlib-metadata==7.0.0
+itsdangerous==2.1.2
+Jinja2==3.1.3
 macholib @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/macholib-1.15.2-py2.py3-none-any.whl
+MarkupSafe==2.1.5
 packaging==23.2
 platformdirs==4.1.0
 psycopg2==2.9.9
@@ -24,6 +30,7 @@ six @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildR
 SQLAlchemy==2.0.28
 typing_extensions==4.10.0
 virtualenv==20.25.0
+Werkzeug==3.0.1
 whichcraft==0.6.1
 zipp==3.17.0
 zope.event==5.0
